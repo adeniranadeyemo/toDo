@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do App</title>
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="input.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <section class="todo-welcome">
+      <div
+        class="todo-welcome-texts flex flex-col content-center pt-14 w-3/4 mx-auto my-auto"
+      >
+        <h2 id="todo-welcome-text" class="font-bold text-3xl">Welcome Niran</h2>
+        <p class="text-xl mt-1 text-gray-700">Create to-do's</p>
+      </div>
+    </section>
+
+    <main class="border-t-2 border-gray-500 mt-5 pt-4">
+      <div class="w-3/4 mx-auto my-auto all-tasks">
+        <!-- <h3>All Tasks</h3> -->
+        <div class="task-input-container">
+          <div class="overlay h-screen w-full"></div>
+          <div class="input-container h-full w-full rounded-t-3xl pl-11">
+            <input
+              type="text"
+              name=""
+              placeholder="Enter a task"
+              id=""
+              class="task-input mt-7 border-b-2 border-gray-400"
+            />
+          </div>
+        </div>
+        <span
+          class="material-icons add-todo active bg-gray-800 text-white text-3xl py-4 px-5 rounded-xl cursor-pointer"
+        >
+          add
+        </span>
+      </div>
+    </main>
+
+    <script src="todo.js"></script>
+  </body>
+</html>

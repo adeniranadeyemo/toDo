@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  padding: 0;
+  margin: 0;
+  font-family: 'Poppins', 'Inter', sans-serif;
+}
+
+.welcome-text h1 {
+  line-height: 2rem;
+}
+
+.fs-input,
+.task-input {
+  border-radius: 25px;
+  background: #f0f0f0;
+  padding: 0.3em 1em;
+  font-size: 1.2rem;
+  display: block;
+}
+
+.task-input {
+  border-radius: 5px;
+  padding: 0.3em 1em;
+  width: 14rem;
+  background: none;
+}
+
+.task-input:focus {
+  outline: none;
+  border-bottom: 2px solid #bdbdbd;
+}
+
+.fs-input::placeholder {
+  color: #909090;
+}
+
+.fs-input:focus {
+  border: 1px solid #909090;
+}
+
+.overlay,
+.input-container {
+  display: none;
+}
+
+.overlay {
+  position: fixed;
+  background: #00000053;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  transition: transform 0.5s ease-in-out;
+  backdrop-filter: blur(0.25rem);
+}
+
+.input-container {
+  background: #fff;
+  position: fixed;
+  top: 7rem;
+  left: 0;
+  z-index: 999;
+  transition: transform 0.5s ease-in-out;
+}
+
+.overlay.active,
+.input-container.active {
+  display: block;
+  animation: fade 0.5s ease-in-out forwards;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 5;
+  }
+}
+
+.add-todo.active {
+  position: absolute;
+  bottom: 3rem;
+  right: 3rem;
+  animation: small 0.7s ease-in-out forwards;
+}
+
+.add-todo {
+  position: absolute;
+  bottom: 3rem;
+  right: 3rem;
+}
+
+@keyframes small {
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.5);
+  }
+}
