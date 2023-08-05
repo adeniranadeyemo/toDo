@@ -25,24 +25,24 @@ html {
   display: block;
 }
 
-.task-input {
-  border-radius: 5px;
-  padding: 0.3em 1em;
-  width: 14rem;
-  background: none;
-}
-
-.task-input:focus {
-  outline: none;
-  border-bottom: 2px solid #bdbdbd;
-}
-
 .fs-input::placeholder {
   color: #909090;
 }
 
 .fs-input:focus {
   border: 1px solid #909090;
+}
+
+.task-input {
+  border-radius: 5px;
+  padding: 0.3em 0 0 1em;
+  width: 13rem;
+  background: none;
+}
+
+.task-input:focus {
+  outline: none;
+  border-bottom: 2px solid rgb(156 153 175);
 }
 
 .overlay,
@@ -104,4 +104,66 @@ html {
   50% {
     transform: scale(0.5);
   }
+}
+
+ul li {
+  margin-right: 0.5rem;
+}
+
+.main-input-container > * + * {
+  margin-left: 1.8rem;
+}
+
+input[type='checkbox'] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 1.3rem;
+  height: 1.3rem;
+  border: 2px solid #aeaeae;
+  border-radius: 4px;
+  border-radius: 50%;
+}
+
+input[type='checkbox']:checked {
+  background-color: #13c200;
+  border: 2px solid #13c200;
+}
+
+.article {
+  display: none;
+}
+
+.article.active {
+  display: block;
+  animation: fade 0.5s ease backwards;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.fav-icon {
+  color: #909090;
+  transition: all 0.5s ease-in-out;
+  position: relative;
+}
+
+.hover-to-fav {
+  display: none;
+}
+
+.fav-icon:hover.hover-to-fav {
+  display: block;
+  /* background: #13c200; */
+  /* position: absolute; */
+  /* top: 0;
+  left: 0; */
+  /* transform: translate(-50%); */
 }

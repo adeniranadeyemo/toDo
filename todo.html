@@ -28,27 +28,63 @@
       </div>
     </section>
 
-    <main class="border-t-2 border-gray-500 mt-5 pt-4">
+    <main class="border-t-2 border-gray-500 mt-5 pt-4 px-14 main-content">
+      <nav class="navbar">
+        <ul class="navbar-list flex justify-between">
+          <li class="navbar-item active" data-nav-link>Tasks</li>
+          <li class="navbar-item">
+            <button class="navbar-item" data-nav-link>Favourites</button>
+          </li>
+          <li class="navbar-item">
+            <button class="navbar-item" data-nav-link>Done</button>
+          </li>
+          <li class="navbar-item">
+            <button class="navbar-item" data-nav-link>Uncompleted</button>
+          </li>
+        </ul>
+      </nav>
+
       <div class="w-3/4 mx-auto my-auto all-tasks">
-        <!-- <h3>All Tasks</h3> -->
+        <!-- Add task modal pop up -->
         <div class="task-input-container">
           <div class="overlay h-screen w-full"></div>
-          <div class="input-container h-full w-full rounded-t-3xl pl-11">
-            <input
-              type="text"
-              name=""
-              placeholder="Enter a task"
-              id=""
-              class="task-input mt-7 border-b-2 border-gray-400"
-            />
+          <div class="input-container h-full w-full rounded-t-3xl">
+            <div class="main-input-container flex items-center pl-12">
+              <input
+                type="text"
+                name=""
+                placeholder="Enter to-do"
+                id=""
+                class="task-input mt-7 border-b-2 border-gray-300"
+              />
+              <span
+                class="material-icons cursor-pointer mt-9 add-to-todo-container"
+              >
+                add
+              </span>
+              <span class="material-icons cursor-pointer mt-9 fav-icon">
+                star
+              </span>
+            </div>
+            <!-- <div class="time-container pl-12 mt-7 flex items-center">
+              <p class="">Set time</p>
+              <span class="material-icons ml-3"> schedule </span>
+            </div> -->
           </div>
         </div>
+        <!-- Add task modal pop up ends -->
+
         <span
           class="material-icons add-todo active bg-gray-800 text-white text-3xl py-4 px-5 rounded-xl cursor-pointer"
         >
           add
         </span>
       </div>
+
+      <article class="tasks active" data-page="tasks"></article>
+      <article class="favourites" data-page="favourites"></article>
+      <article class="done" data-page="done"></article>
+      <article class="uncompleted" data-page="uncompleted"></article>
     </main>
 
     <script src="todo.js"></script>
