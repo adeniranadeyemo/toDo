@@ -152,18 +152,28 @@ input[type='checkbox']:checked {
 .fav-icon {
   color: #909090;
   transition: all 0.5s ease-in-out;
+}
+
+.reveal {
   position: relative;
+  width: fit-content;
+  display: flex;
+  align-items: center;
 }
 
 .hover-to-fav {
   display: none;
 }
 
-.fav-icon:hover.hover-to-fav {
+.reveal:hover .hover-to-fav {
   display: block;
-  /* background: #13c200; */
-  /* position: absolute; */
-  /* top: 0;
-  left: 0; */
-  /* transform: translate(-50%); */
+  border-radius: 5px;
+  align-self: center;
+  /* background: #f0f0f0; */
+  font-size: 0.85rem;
+  width: 9rem;
+  position: absolute;
+  top: -120%;
+  left: 70%;
+  transform: translateX(-50%);
 }
