@@ -1,4 +1,5 @@
 'use strict';
+
 const toDoWelcome = document.getElementById('todo-welcome-text');
 
 let username = localStorage.getItem('inputValue');
@@ -24,34 +25,30 @@ const navigationLinks = document.querySelectorAll('[data-nav-link]');
 const pages = document.querySelectorAll('[data-page]');
 //
 const toDos = [];
-const toDosHTML = [];
 const fav = [];
 const done = [];
 const unComp = [];
-
-const elementToggle = function (element) {
-  element.classList.toggle('active');
-};
-
-showTaskCon.addEventListener('click', function () {
-  elementToggle(overlay);
-  elementToggle(inputContainer);
-  elementToggle(showTaskCon);
-});
-
-overlay.addEventListener('click', function () {
-  elementToggle(overlay);
-  elementToggle(inputContainer);
-  elementToggle(showTaskCon);
-});
 
 let inputed;
 let html;
 let deleteToDo;
 let deleteToDoArray;
-let parentArray = [];
 
-const updateTasksUI = function () {
+const elementToggle = function (element) {
+  element.classList.toggle('active');
+};
+
+function toggleTaskContainer() {
+  elementToggle(overlay);
+  elementToggle(inputContainer);
+  elementToggle(showTaskCon);
+}
+
+showTaskCon.addEventListener('click', toggleTaskContainer);
+overlay.addEventListener('click', toggleTaskContainer);
+
+// Creating to-do to be displayed as inputed
+const displayToDoContent = function () {
   tasks.innerHTML = '';
 
   if (inputedTodo.value !== '') {
@@ -79,55 +76,54 @@ const updateTasksUI = function () {
           </div>`;
 
     tasks.insertAdjacentHTML('afterbegin', html);
-  });
-  toDosHTML.push(html);
 
-  deleteToDo = document.querySelectorAll('.delete-todo');
+    deleteToDo = document.querySelectorAll('.delete-todo');
+  });
 };
 
+// Implementing the displayToDoContent function
 addTodo.addEventListener('click', function () {
   if (inputed !== '') {
-    updateTasksUI();
+    displayToDoContent();
+
     inputedTodo.value = '';
 
-    deleteToDoArray = Array.from(deleteToDo);
-    // console.log(deleteToDoArray);
-
-    let delgrandParent;
-    let delgrandParentArray = [];
-
-    for (const i of deleteToDoArray) {
-      delgrandParent = i.parentNode.parentNode;
-      delgrandParentArray.push(delgrandParent);
-    }
-
-    deleteToDoArray.forEach((delBtn) => {
-      delBtn.addEventListener('click', function () {
-        const delBtnIndex = deleteToDoArray.findIndex((del) => del === delBtn);
-        // console.log(delBtnIndex);
-
-        const delgrandParentIndex = delgrandParentArray.findIndex(
-          (todo) => todo === delBtn.parentNode.parentNode
-        );
-        console.log(delgrandParentIndex);
-
-        if (delgrandParentIndex !== -1) {
-          deleteToDoArray.splice(delgrandParentIndex, 1);
-          console.log(deleteToDoArray);
-          delgrandParentArray.splice(delgrandParentIndex, 1);
-          console.log(delgrandParentArray);
-          // delBtn.parentNode.parentNode.remove();
-        }
-        // updateTasksUI();
-      });
-    });
+    deleteToDoArray = Array.from(deleteToDo).reverse();
   }
   elementToggle(overlay);
   elementToggle(inputContainer);
   elementToggle(showTaskCon);
+  // toggleTaskContainer;
 });
+
+const deleteTodoDiv = function (index) {
+  toDos.splice(index, 1);
+
+  deleteToDoArray.splice(index, 1);
+};
+
+tasks.addEventListener('click', function (e) {
+  if (e.target.classList.contains('delete-todo')) {
+    const deleteIndex = Array.from(deleteToDo).reverse().indexOf(e.target);
+
+    deleteTodoDiv(deleteIndex);
+    displayToDoContent();
+  }
+});
+
 //   const addToFav = document.querySelectorAll('.fav-icon');
 
 // addToFav.addEventListener('click', function () {});
 
-// console.log(parentIndex);
+// navigationLinks.forEach(function(link) {
+//   link.addEventListener('click', function() {
+//     const targetPage = link.dataset.page;
+//     pages.forEach(function(page) {
+//       if (page.dataset.page === targetPage) {
+//         page.classList.add('active');
+//       } else {
+//         page.classList.remove('active');
+//       }
+//     });
+//   });
+// });
