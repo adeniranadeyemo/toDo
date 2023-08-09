@@ -126,15 +126,39 @@ presentTodo.addEventListener('click', function () {
 
     inputedTodo.value = '';
 
-    deleteToDoArray = Array.from(deleteToDo).reverse();
+    // deleteToDoArray = Array.from(deleteToDo).reverse();
   }
   elementToggle(overlay);
   elementToggle(inputContainer);
   elementToggle(showTaskCon);
 });
 
-// Event delegation for delete buttons
+// Event delegation for delete buttons on each page
 tasks.addEventListener('click', function (e) {
+  if (e.target.classList.contains('delete-todo')) {
+    const deleteIndex = Array.from(deleteToDo).reverse().indexOf(e.target);
+
+    deleteTodo(deleteIndex);
+  }
+});
+
+favs.addEventListener('click', function (e) {
+  if (e.target.classList.contains('delete-todo')) {
+    const deleteIndex = Array.from(deleteToDo).reverse().indexOf(e.target);
+
+    deleteTodo(deleteIndex);
+  }
+});
+
+doneTasks.addEventListener('click', function (e) {
+  if (e.target.classList.contains('delete-todo')) {
+    const deleteIndex = Array.from(deleteToDo).reverse().indexOf(e.target);
+
+    deleteTodo(deleteIndex);
+  }
+});
+
+uncomplete.addEventListener('click', function (e) {
   if (e.target.classList.contains('delete-todo')) {
     const deleteIndex = Array.from(deleteToDo).reverse().indexOf(e.target);
 
