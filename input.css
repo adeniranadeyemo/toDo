@@ -130,13 +130,22 @@ input[type='checkbox']:checked {
   border: 2px solid #13c200;
 }
 
-.article {
+article {
   display: none;
 }
 
-.article.active {
+article.active {
   display: block;
   animation: fade 0.5s ease backwards;
+}
+
+button {
+  display: block;
+  border: none;
+}
+
+button.active-li {
+  border-bottom: 2px solid rgb(31, 41, 55);
 }
 
 @keyframes fade {
@@ -150,7 +159,7 @@ input[type='checkbox']:checked {
 }
 
 .fav-icon {
-  color: #909090;
+  color: #cccccc;
   transition: all 0.5s ease-in-out;
 }
 

@@ -23,7 +23,9 @@
         class="todo-welcome-texts flex flex-col content-center pt-14 w-3/4 mx-auto my-auto"
       >
         <h2 id="todo-welcome-text" class="font-bold text-3xl">Welcome Niran</h2>
-        <p class="text-xl mt-1 text-gray-700">Create to-do's</p>
+        <p class="text-xl mt-1 text-gray-700" id="todo-welcome-subtext">
+          Create to-do's
+        </p>
       </div>
     </section>
 
@@ -33,15 +35,17 @@
       <div>
         <nav class="navbar">
           <ul class="navbar-list flex justify-between">
-            <li class="navbar-item active" data-nav-link>Tasks</li>
             <li class="navbar-item">
-              <button class="navbar-item" data-nav-link>Favourites</button>
+              <button class="navbar-link active-li" data-nav-link>Tasks</button>
             </li>
             <li class="navbar-item">
-              <button class="navbar-item" data-nav-link>Done</button>
+              <button class="navbar-link" data-nav-link>Favourites</button>
             </li>
             <li class="navbar-item">
-              <button class="navbar-item" data-nav-link>Uncompleted</button>
+              <button class="navbar-link" data-nav-link>Done</button>
+            </li>
+            <li class="navbar-item">
+              <button class="navbar-link" data-nav-link>Uncompleted</button>
             </li>
           </ul>
         </nav>
@@ -89,9 +93,9 @@
         </span>
 
         <article class="tasks active mt-14" data-page="tasks"></article>
-        <article class="favourites" data-page="favourites"></article>
-        <article class="done" data-page="done"></article>
-        <article class="uncompleted" data-page="uncompleted"></article>
+        <article class="favourites mt-14" data-page="favourites"></article>
+        <article class="done mt-14" data-page="done"></article>
+        <article class="uncompleted mt-14" data-page="uncompleted"></article>
       </div>
     </main>
 
