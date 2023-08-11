@@ -125,7 +125,12 @@ input[type='checkbox'] {
   border-radius: 50%;
 }
 
-input[type='checkbox']:checked {
+/* input[type='checkbox']:checked {
+  background-color: #13c200;
+  border: 2px solid #13c200;
+} */
+
+input[type='checkbox'].done {
   background-color: #13c200;
   border: 2px solid #13c200;
 }

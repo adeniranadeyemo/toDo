@@ -56,18 +56,19 @@ overlay.addEventListener('click', toggleTaskContainer);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const todos = [];
 let fav = [];
-const done = [];
-const unComp = [];
+let done = [];
+let unComp = [];
 
 const generateHTML = function (obj, i) {
   const isFavouriteClass = obj.favorite ? 'favourite' : '';
+  const isDoneClass = obj.done ? 'done' : '';
   const hoverToFavText = obj.favorite
-    ? 'Added to favourite'
+    ? 'Added to favourites'
     : 'Add to favourites';
 
   html = `<div class="inner-tasks-container flex         items-center mt-6 justify-between mb-2">
-                  <input type="checkbox" class="basis-.5/5" />
-                  <p class="basis-3/5 ml-2">${obj.text}</p>
+                  <input type="checkbox" class="basis-.5/5 ${isDoneClass}" onclick="toggleDone(${i})"/>
+                  <p class="basis-3/5 ml-2" id="todoText">${obj.text}</p>
               <div class="basis-1.5/5 flex items-center">
               <div class="reveal">
               <p class="hover-to-fav">${hoverToFavText}</p>
@@ -100,39 +101,72 @@ const addTodo = function () {
 
 // Delete a to-do
 function deleteTodo(index) {
-  // const index = todos.findIndex((todo) => todo.id === id);
   if (index !== -1) {
     todos.splice(index, 1);
     renderTodos();
     renderFavourites();
   }
-  // fav.splice(index, 1);
+
+  todos.length === 0
+    ? (toDoWelcomeSubText.innerHTML = `Create to-do's`)
+    : `Your to-do's`;
 }
 
 // Toggle favorite
 function toggleFavorite(index) {
   todos[index].favorite = !todos[index].favorite;
-  renderTodos();
-  renderFavourites();
 
-  // if (todos[index].favorite === true) {
-  //   fav.push(todos[index]);
-  // } else
   if (todos[index].favorite === false) {
-    let ind = todos[index];
+    let indFav = todos[index];
     fav.splice(
-      fav.findIndex((todo) => todo === fav[ind]),
+      fav.findIndex((todo) => todo === fav[indFav]),
       1
     );
   }
   renderTodos();
   renderFavourites();
+  renderDone();
+  // renderUncompleted();
 
   hoverText.style.display = 'block';
 
   setTimeout(() => {
     hoverText.style.display = 'none';
   }, 3000);
+}
+
+// Toggle done
+function toggleDone(index) {
+  todos[index].done = !todos[index].done;
+
+  if (todos[index].done === false) {
+    let indDone = todos[index];
+    done.splice(
+      done.findIndex((todo) => todo === done[indDone]),
+      1
+    );
+  }
+  renderTodos();
+  renderDone();
+  renderFavourites();
+  // renderUncompleted();
+}
+
+// Uncompleted
+function toggleUncompleted (index) {
+  todos[index].done = todos[index].done;
+
+  if (todos[index].done === true) {
+    let indUncomp = todos[index];
+    unComp.splice(
+      done.findIndex((todo) => todo === done[indUncomp]),
+      1
+    );
+  }
+  renderTodos()
+  renderDone();
+  renderUncompleted()
+  renderFavourites();
 }
 
 // Render to do
@@ -142,12 +176,11 @@ const renderTodos = function () {
   todos.forEach(function (todo, index) {
     generateHTML(todo, index);
 
-    tasks.insertAdjacentHTML('beforeend', html);
-
-    deleteToDo = document.querySelectorAll('.delete-todo');
+    tasks.insertAdjacentHTML('afterbegin', html);
   });
 };
 
+// Render favourites
 const renderFavourites = function () {
   favs.innerHTML = '';
 
@@ -156,19 +189,37 @@ const renderFavourites = function () {
   fav.forEach(function (todo, index) {
     generateHTML(todo, index);
 
-    favs.insertAdjacentHTML('beforeend', html);
+    favs.insertAdjacentHTML('afterbegin', html);
   });
 };
 
-// const renderDone = function () {};
+const renderDone = function () {
+  doneTasks.innerHTML = '';
 
-// const
+  done = todos.filter((todo) => todo.done);
+
+  done.forEach(function (todo, index) {
+    generateHTML(todo, index);
+
+    doneTasks.insertAdjacentHTML('afterbegin', html);
+  });
+};
+
+const renderUncompleted = function () {
+  uncomplete.innerHTML = '';
+
+  unComp = todos.filter((todo) => !todo.done);
+
+  unComp.forEach(function (todo, index) {
+    generateHTML(todo, index);
+
+    uncomplete.insertAdjacentHTML('afterbegin', html);
+  });
+};
 
 // Implementing the addTodo function
 presentTodo.addEventListener('click', function () {
   if (inputedTodo.value !== '') {
-    // inputed = inputedTodo.value;
-    // addTodo(inputed);
     addTodo();
 
     toDoWelcomeSubText.innerHTML = `Your to-do's.`;
@@ -181,35 +232,45 @@ presentTodo.addEventListener('click', function () {
 });
 
 // Event delegation for delete buttons on each page
+let delIndex;
+
+const findIndexFunc = function (event) {
+  const paragraphElem = event.target.parentNode.parentNode.querySelector('p');
+
+  const parentText = paragraphElem.textContent;
+
+  delIndex = todos.findIndex((todo) => todo.text === parentText);
+};
+
 tasks.addEventListener('click', function (e) {
   if (e.target.classList.contains('delete-todo')) {
-    const deleteIndex = Array.from(deleteToDo).indexOf(e.target);
+    findIndexFunc(e);
 
-    deleteTodo(deleteIndex);
+    deleteTodo(delIndex);
   }
 });
 
 favs.addEventListener('click', function (e) {
   if (e.target.classList.contains('delete-todo')) {
-    const deleteIndex = e.target.parentNode.parentNode;
+    findIndexFunc(e);
 
-    deleteTodo(deleteIndex);
+    deleteTodo(delIndex);
   }
 });
 
 doneTasks.addEventListener('click', function (e) {
   if (e.target.classList.contains('delete-todo')) {
-    const deleteIndex = e.target.parentNode.parentNode;
+    findIndexFunc(e);
 
-    deleteTodo(deleteIndex);
+    deleteTodo(delIndex);
   }
 });
 
 uncomplete.addEventListener('click', function (e) {
   if (e.target.classList.contains('delete-todo')) {
-    const deleteIndex = e.target.parentNode.parentNode;
+    findIndexFunc(e);
 
-    deleteTodo(deleteIndex);
+    deleteTodo(delIndex);
   }
 });
 
@@ -223,12 +284,30 @@ for (let i = 0; i < navigationLinks.length; i++) {
         window.scrollTo(0, 0);
 
         if (pages[i].dataset.page === 'favourites') {
-          toDoWelcomeSubText.innerHTML = `Your favourites.`;
-        } else if (pages[i].dataset.page === 'done') {
-          toDoWelcomeSubText.innerHTML = `Completed tasks.`;
-        } else if (pages[i].dataset.page === 'uncompleted') {
-          toDoWelcomeSubText.innerHTML = `You've got work to do!`;
-        } else {
+          if (fav.length === 0) {
+            toDoWelcomeSubText.innerHTML = `Nothing to see here.`;
+          } else {
+            toDoWelcomeSubText.innerHTML = `Your favourites.`;
+          }
+        }
+        //
+        else if (pages[i].dataset.page === 'done') {
+          if (done.length === 0) {
+            toDoWelcomeSubText.innerHTML = `Nothing to see here.`;
+          } else {
+            toDoWelcomeSubText.innerHTML = `Completed tasks.`;
+          }
+        }
+        //
+        else if (pages[i].dataset.page === 'uncompleted') {
+          if (unComp.length === 0) {
+            toDoWelcomeSubText.innerHTML = `Nothing to see here.`;
+          } else {
+            toDoWelcomeSubText.innerHTML = `You've got work to do!`;
+          }
+        }
+        //
+        else {
           toDoWelcomeSubText.innerHTML = `Your to-do's.`;
         }
       } else {
