@@ -55,7 +55,7 @@ html {
   background: #00000053;
   top: 0;
   left: 0;
-  z-index: 3;
+  z-index: 800;
   transition: transform 0.5s ease-in-out;
   backdrop-filter: blur(0.25rem);
 }
@@ -84,17 +84,24 @@ html {
   }
 }
 
+.add-todo-con {
+  position: fixed;
+  background: rgb(228, 228, 228);
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 500;
+  box-shadow: 0px -2px 17px 2px rgba(0, 0, 0, 0.07);
+}
+
 .add-todo.active {
-  position: absolute;
-  bottom: 3rem;
-  right: 3rem;
+  z-index: 999;
+  float: right;
   animation: small 0.7s ease-in-out forwards;
 }
 
 .add-todo {
-  position: absolute;
-  bottom: 3rem;
-  right: 3rem;
+  float: right;
 }
 
 @keyframes small {
