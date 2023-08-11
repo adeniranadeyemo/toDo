@@ -194,4 +194,11 @@ button.active-li {
 
 .favourite {
   color: gold;
+  /* transition: all 0.9s ease-in-out; */
+}
+
+.strikethrough {
+  text-decoration: line-through;
+  color: #909090;
+  /* transition: all 2s ease-in-out; */
 }

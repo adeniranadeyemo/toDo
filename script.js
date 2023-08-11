@@ -14,12 +14,14 @@ inputField1.addEventListener('input', () => {
   }
 });
 
-let value;
+let user;
 form.addEventListener('submit', (event) => {
   event.preventDefault();
 
-  value = inputField1.value;
+  user = inputField1.value;
 
-  localStorage.setItem('inputValue', value);
+  localStorage.setItem('inputValue', user);
   window.location.href = `todo.html`;
+
+  // localStorage.clear();
 });
