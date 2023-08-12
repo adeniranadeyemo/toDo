@@ -61,7 +61,7 @@ const generateHTML = function (obj, i) {
     : 'Add to favourites';
 
   html = `<div class="inner-tasks-container flex         items-center mt-6 justify-between mb-2">
-                  <input type="checkbox" class="basis-.5/5 ${isDoneClass}" onclick="toggleDone(${i}); toggleUncompleted(${i});"/>
+                  <input type="checkbox" class="basis-.5/5 ${isDoneClass}" onclick="toggleDone(${i})"/>
                   <p class="basis-3/5 ml-2 ${isDoneStrike}" id="todoText">${obj.text}</p>
               <div class="basis-1.5/5 flex items-center">
               <div class="reveal">
@@ -90,7 +90,7 @@ const addTodo = function () {
     });
   }
   renderTodos();
-  renderUncompleted();
+  // renderUncompleted();
 };
 
 // Delete a to-do
@@ -100,7 +100,7 @@ function deleteTodo(index) {
     renderTodos();
     renderFavourites();
     renderDone();
-    renderUncompleted();
+    // renderUncompleted();
   }
 
   todos.length === 0
@@ -128,7 +128,7 @@ function toggleFavorite(index) {
   renderTodos();
   renderFavourites();
   renderDone();
-  renderUncompleted();
+  // renderUncompleted();
 }
 
 // Toggle done
@@ -144,29 +144,29 @@ function toggleDone(index) {
   renderTodos();
   renderDone();
   renderFavourites();
-  renderUncompleted();
+  // renderUncompleted();
 }
 
 // Uncompleted
-function toggleUncompleted(index) {
-  todos[index].done = todos[index].done;
+// function toggleUncompleted(index) {
+//   todos[index].done = todos[index].done;
 
-  if (todos[index].done === true) {
-    let indUncomp = todos[index];
-    const uncompIndex = unCompArr.findIndex(
-      (todo) => todo === unCompArr[indUncomp]
-    );
+//   if (todos[index].done === true) {
+//     let indUncomp = todos[index];
+//     const uncompIndex = unCompArr.findIndex(
+//       (todo) => todo === unCompArr[indUncomp]
+//     );
 
-    if (uncompIndex !== -1) {
-      unCompArr.splice(uncompIndex, 1);
-    }
-  }
+//     if (uncompIndex !== -1) {
+//       unCompArr.splice(uncompIndex, 1);
+//     }
+//   }
 
-  renderTodos();
-  renderUncompleted();
-  renderDone();
-  renderFavourites();
-}
+//   renderTodos();
+//   renderUncompleted();
+//   renderDone();
+//   renderFavourites();
+// }
 
 // Render to do
 const renderTodos = function () {
@@ -204,17 +204,17 @@ const renderDone = function () {
   });
 };
 
-const renderUncompleted = function () {
-  uncomplete.innerHTML = '';
+// const renderUncompleted = function () {
+//   uncomplete.innerHTML = '';
 
-  unCompArr = todos.filter((todo) => !todo.done);
+//   unCompArr = todos.filter((todo) => !todo.done);
 
-  unCompArr.forEach(function (todo, index) {
-    generateHTML(todo, index);
+//   unCompArr.forEach(function (todo, index) {
+//     generateHTML(todo, index);
 
-    uncomplete.insertAdjacentHTML('afterbegin', html);
-  });
-};
+//     uncomplete.insertAdjacentHTML('afterbegin', html);
+//   });
+// };
 
 // Implementing the addTodo function
 presentTodo.addEventListener('click', function () {
@@ -266,18 +266,22 @@ const del = function (e) {
 tasks.addEventListener('click', del);
 favs.addEventListener('click', del);
 doneTasks.addEventListener('click', del);
-uncomplete.addEventListener('click', del);
+// uncomplete.addEventListener('click', del);
 
 // Switch pages
 for (let i = 0; i < navigationLinks.length; i++) {
   navigationLinks[i].addEventListener('click', function () {
     for (let i = 0; i < pages.length; i++) {
-      if (this.innerHTML.toLowerCase() === pages[i].dataset.page) {
+      if (this.innerHTML.toLowerCase().trim() === pages[i].dataset.page) {
         pages[i].classList.add('active');
         navigationLinks[i].classList.add('active-li');
         window.scrollTo(0, 0);
 
-        if (pages[i].dataset.page === 'favourites') {
+        if (pages[i].dataset.page === 'tasks') {
+          todos.length === 0
+            ? (toDoWelcomeSubText.innerHTML = `Create to-dos.`)
+            : (toDoWelcomeSubText.innerHTML = `Your to-do's.`);
+        } else if (pages[i].dataset.page === 'favourites') {
           favArr.length === 0
             ? (toDoWelcomeSubText.innerHTML = `Nothing to see here.`)
             : (toDoWelcomeSubText.innerHTML = `Your favourites.`);
@@ -289,17 +293,12 @@ for (let i = 0; i < navigationLinks.length; i++) {
             : (toDoWelcomeSubText.innerHTML = `Completed tasks.`);
         }
         //
-        else if (pages[i].dataset.page === 'uncompleted') {
-          unCompArr.length === 0
-            ? (toDoWelcomeSubText.innerHTML = `Nothing to see here.`)
-            : (toDoWelcomeSubText.innerHTML = `You've got work to do!`);
-        }
+        // else if (pages[i].dataset.page === 'uncompleted') {
+        //   unCompArr.length === 0
+        //     ? (toDoWelcomeSubText.innerHTML = `Nothing to see here.`)
+        //     : (toDoWelcomeSubText.innerHTML = `You've got work to do!`);
+        // }
         //
-        else {
-          todos.length === 0
-            ? (toDoWelcomeSubText.innerHTML = `Your to-do's.`)
-            : `Create to-dos.`;
-        }
       } else {
         pages[i].classList.remove('active');
         navigationLinks[i].classList.remove('active-li');
