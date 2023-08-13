@@ -52,22 +52,22 @@ let favArr = [];
 let doneArr = [];
 let unCompArr = [];
 
-const generateHTML = function (obj, i) {
-  const isFavouriteClass = obj.favorite ? 'favourite' : '';
-  const isDoneClass = obj.done ? 'done' : '';
-  const isDoneStrike = obj.done ? 'strikethrough' : '';
-  const hoverToFavText = obj.favorite
+const generateHTML = function (todo) {
+  const isFavouriteClass = todo.favorite ? 'favourite' : '';
+  const isDoneClass = todo.done ? 'done' : '';
+  const isDoneStrike = todo.done ? 'strikethrough' : '';
+  const hoverToFavText = todo.favorite
     ? 'Added to favourites'
     : 'Add to favourites';
 
   html = `<div class="inner-tasks-container flex         items-center mt-6 justify-between mb-2">
-                  <input type="checkbox" class="basis-.5/5 ${isDoneClass}" onclick="toggleDone(${i})"/>
-                  <p class="basis-3/5 ml-2 ${isDoneStrike}" id="todoText">${obj.text}</p>
+                  <input type="checkbox" class="basis-.5/5 ${isDoneClass}" onclick="toggleDone(${todo.id})"/>
+                  <p class="basis-3/5 ml-2 ${isDoneStrike}" id="todoText">${todo.text}</p>
               <div class="basis-1.5/5 flex items-center">
               <div class="reveal">
-              <p class="hover-to-fav">${hoverToFavText}</p>
+              <p class="hover-to-fav" data-id="${todo.id}">${hoverToFavText}</p>
 
-                  <span class="material-icons cursor-pointer fav-icon ml-4 ${isFavouriteClass}" onclick="toggleFavorite(${i})">
+                  <span class="material-icons cursor-pointer fav-icon ml-4 ${isFavouriteClass}" data-id="${todo.id}" onclick="toggleFavorite(${todo.id})">
                   star
                   </span>
               </div>
@@ -80,17 +80,19 @@ const generateHTML = function (obj, i) {
 };
 
 // Tasks functionalities start
+let todoId = 0;
 const addTodo = function () {
   if (inputedTodo.value !== '') {
     let text = inputedTodo.value;
     todos.push({
+      id: todoId,
       text,
       favorite: false,
       done: false,
     });
   }
+  todoId++;
   renderTodos();
-  // renderUncompleted();
 };
 
 // Delete a to-do
@@ -100,7 +102,6 @@ function deleteTodo(index) {
     renderTodos();
     renderFavourites();
     renderDone();
-    // renderUncompleted();
   }
 
   todos.length === 0
@@ -109,71 +110,45 @@ function deleteTodo(index) {
 }
 
 // Toggle favorite
-function toggleFavorite(index) {
-  todos[index].favorite = !todos[index].favorite;
+function toggleFavorite(id) {
+  const todo = todos.find((todo) => id === todo.id);
+  console.log(todo);
 
-  if (todos[index].favorite === false) {
-    let indFav = todos[index];
-    favArr.splice(
-      favArr.findIndex((todo) => todo === favArr[indFav]),
-      1
-    );
+  if (todo) {
+    todo.favorite = !todo.favorite;
+    if (!todo.favorite) {
+      const favIndex = favArr.findIndex((todo) => todo.id === id);
+      favArr.splice(favIndex, 1);
+    }
   }
-  hoverText.style.display = 'block';
-
-  setTimeout(() => {
-    hoverText.style.display = 'none';
-  }, 3000);
 
   renderTodos();
   renderFavourites();
   renderDone();
-  // renderUncompleted();
 }
 
-// Toggle done
-function toggleDone(index) {
-  todos[index].done = !todos[index].done;
+function toggleDone(id) {
+  const todo = todos.find((todo) => id === todo.id);
 
-  if (todos[index].done === false) {
-    let indDone = todos[index];
-    const doneIndex = doneArr.findIndex((todo) => todo === doneArr[indDone]);
-    doneArr.splice(doneIndex, 1);
+  if (todo) {
+    todo.done = !todo.done;
+    if (!todo.done) {
+      const doneIndex = doneArr.findIndex((todo) => id === todo.id);
+      doneArr.splice(doneIndex, 1);
+    }
   }
 
   renderTodos();
   renderDone();
   renderFavourites();
-  // renderUncompleted();
 }
-
-// Uncompleted
-// function toggleUncompleted(index) {
-//   todos[index].done = todos[index].done;
-
-//   if (todos[index].done === true) {
-//     let indUncomp = todos[index];
-//     const uncompIndex = unCompArr.findIndex(
-//       (todo) => todo === unCompArr[indUncomp]
-//     );
-
-//     if (uncompIndex !== -1) {
-//       unCompArr.splice(uncompIndex, 1);
-//     }
-//   }
-
-//   renderTodos();
-//   renderUncompleted();
-//   renderDone();
-//   renderFavourites();
-// }
 
 // Render to do
 const renderTodos = function () {
   tasks.innerHTML = '';
 
-  todos.forEach(function (todo, index) {
-    generateHTML(todo, index);
+  todos.forEach(function (todo) {
+    generateHTML(todo);
 
     tasks.insertAdjacentHTML('afterbegin', html);
   });
@@ -185,8 +160,8 @@ const renderFavourites = function () {
 
   favArr = todos.filter((todo) => todo.favorite);
 
-  favArr.forEach(function (todo, index) {
-    generateHTML(todo, index);
+  favArr.forEach(function (todo) {
+    generateHTML(todo);
 
     favs.insertAdjacentHTML('afterbegin', html);
   });
@@ -197,24 +172,12 @@ const renderDone = function () {
 
   doneArr = todos.filter((todo) => todo.done);
 
-  doneArr.forEach(function (todo, index) {
-    generateHTML(todo, index);
+  doneArr.forEach(function (todo) {
+    generateHTML(todo);
 
     doneTasks.insertAdjacentHTML('afterbegin', html);
   });
 };
-
-// const renderUncompleted = function () {
-//   uncomplete.innerHTML = '';
-
-//   unCompArr = todos.filter((todo) => !todo.done);
-
-//   unCompArr.forEach(function (todo, index) {
-//     generateHTML(todo, index);
-
-//     uncomplete.insertAdjacentHTML('afterbegin', html);
-//   });
-// };
 
 // Implementing the addTodo function
 presentTodo.addEventListener('click', function () {
@@ -233,12 +196,14 @@ addToFavourites.addEventListener('click', function () {
   if (inputedTodo.value !== '') {
     let text = inputedTodo.value;
     todos.push({
+      id: todoId,
       text,
       favorite: true,
       done: false,
     });
     inputedTodo.value = '';
   }
+  todoId++;
   renderTodos();
   renderFavourites();
   toggleTaskContainer();
@@ -263,6 +228,7 @@ const del = function (e) {
     deleteTodo(delIndex);
   }
 };
+
 tasks.addEventListener('click', del);
 favs.addEventListener('click', del);
 doneTasks.addEventListener('click', del);
@@ -272,14 +238,14 @@ doneTasks.addEventListener('click', del);
 for (let i = 0; i < navigationLinks.length; i++) {
   navigationLinks[i].addEventListener('click', function () {
     for (let i = 0; i < pages.length; i++) {
-      if (this.innerHTML.toLowerCase().trim() === pages[i].dataset.page) {
+      if (this.innerHTML.toLowerCase() === pages[i].dataset.page) {
         pages[i].classList.add('active');
         navigationLinks[i].classList.add('active-li');
         window.scrollTo(0, 0);
 
         if (pages[i].dataset.page === 'tasks') {
           todos.length === 0
-            ? (toDoWelcomeSubText.innerHTML = `Create to-dos.`)
+            ? (toDoWelcomeSubText.innerHTML = `Create to-do's.`)
             : (toDoWelcomeSubText.innerHTML = `Your to-do's.`);
         } else if (pages[i].dataset.page === 'favourites') {
           favArr.length === 0
@@ -292,12 +258,6 @@ for (let i = 0; i < navigationLinks.length; i++) {
             ? (toDoWelcomeSubText.innerHTML = `Nothing to see here.`)
             : (toDoWelcomeSubText.innerHTML = `Completed tasks.`);
         }
-        //
-        // else if (pages[i].dataset.page === 'uncompleted') {
-        //   unCompArr.length === 0
-        //     ? (toDoWelcomeSubText.innerHTML = `Nothing to see here.`)
-        //     : (toDoWelcomeSubText.innerHTML = `You've got work to do!`);
-        // }
         //
       } else {
         pages[i].classList.remove('active');
