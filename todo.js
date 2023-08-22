@@ -232,7 +232,6 @@ const del = function (e) {
 tasks.addEventListener('click', del);
 favs.addEventListener('click', del);
 doneTasks.addEventListener('click', del);
-// uncomplete.addEventListener('click', del);
 
 // Switch pages
 for (let i = 0; i < navigationLinks.length; i++) {
