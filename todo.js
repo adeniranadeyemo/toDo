@@ -1,7 +1,7 @@
 'use strict';
 
 let username = localStorage.getItem('inputValue');
-console.log(username);
+// console.log(username);
 
 const toDoWelcome = document.getElementById('todo-welcome-text');
 
@@ -60,17 +60,20 @@ const generateHTML = function (todo) {
     ? 'Added to favourites'
     : 'Add to favourites';
 
-  html = `<div class="inner-tasks-container flex         items-center mt-6 justify-between mb-2">
-                  <input type="checkbox" class="basis-.5/5 ${isDoneClass}" onclick="toggleDone(${todo.id})"/>
-                  <p class="basis-3/5 ml-2 ${isDoneStrike}" id="todoText">${todo.text}</p>
+  html = `
+          <div class="inner-tasks-container flex     items-center mt-6 justify-between mb-2">
+              <input type="checkbox" class="basis-.5/5 ${isDoneClass}" onclick="toggleDone(${todo.id})"/>
+              
+              <p class="basis-3/5 ml-2 ${isDoneStrike}" id="${todo.id}">${todo.text}</p>
+              
               <div class="basis-1.5/5 flex items-center">
-              <div class="reveal">
-              <p class="hover-to-fav" data-id="${todo.id}">${hoverToFavText}</p>
+                <div class="reveal">
+                  <p class="hover-to-fav" data-id="${todo.id}">${hoverToFavText}</p>
 
-                  <span class="material-icons cursor-pointer fav-icon ml-4 ${isFavouriteClass}" data-id="${todo.id}" onclick="toggleFavorite(${todo.id})">
+                  <span class="material-icons cursor-pointer fav-icon ml-4 ${isFavouriteClass}"   data-id="${todo.id}" onclick="toggleFavorite(${todo.id})">
                   star
                   </span>
-              </div>
+                </div>
 
                   <span class="material-icons cursor-pointer delete-todo ml-4">
                       delete
@@ -112,7 +115,6 @@ function deleteTodo(index) {
 // Toggle favorite
 function toggleFavorite(id) {
   const todo = todos.find((todo) => id === todo.id);
-  console.log(todo);
 
   if (todo) {
     todo.favorite = !todo.favorite;
@@ -246,7 +248,9 @@ for (let i = 0; i < navigationLinks.length; i++) {
           todos.length === 0
             ? (toDoWelcomeSubText.innerHTML = `Create to-do's.`)
             : (toDoWelcomeSubText.innerHTML = `Your to-do's.`);
-        } else if (pages[i].dataset.page === 'favourites') {
+        }
+        //
+        else if (pages[i].dataset.page === 'favourites') {
           favArr.length === 0
             ? (toDoWelcomeSubText.innerHTML = `Nothing to see here.`)
             : (toDoWelcomeSubText.innerHTML = `Your favourites.`);
