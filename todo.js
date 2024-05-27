@@ -50,6 +50,7 @@ const todos = JSON.parse(localStorage.getItem('data')) || [];
 let favArr = [];
 let doneArr = [];
 let unCompArr = [];
+let currentTask = {};
 
 const generateHTML = function (todo) {
   const isFavouriteClass = todo.favorite ? 'favourite' : '';
@@ -74,6 +75,10 @@ const generateHTML = function (todo) {
                   </span>
                 </div>
 
+                <span class="material-icons cursor-pointer edit-todo ml-4" ">
+                      edit
+                  </span>
+
                   <span class="material-icons cursor-pointer delete-todo ml-4">
                       delete
                   </span>
@@ -87,18 +92,50 @@ let todoId = localStorage.getItem('todoId')
   : 0;
 const addTodo = function () {
   if (inputedTodo.value !== '') {
-    let text = inputedTodo.value;
-    todos.push({
+    const todoIndex = todos.findIndex((todo) => todo.id === currentTask.id);
+
+    const todoObj = {
       id: todoId,
-      text,
+      text: inputedTodo.value,
       favorite: false,
       done: false,
-    });
+    };
+
+    if (todoIndex === -1) {
+      todos.push(todoObj);
+      reset;
+    } else {
+      todos[todoIndex] = todoObj;
+    }
+
+    localStorage.setItem('data', JSON.stringify(todos));
   }
   todoId++;
 
+  inputedTodo.value = '';
+
   persistence(todos, todoId);
 };
+
+window.addEventListener('DOMContentLoaded', function () {
+  persistence(todos, todoId);
+  // localStorage.clear();
+});
+
+// Edit todo
+function editTodo(index) {
+  currentTask = todos[index];
+
+  inputedTodo.value = currentTask.text;
+
+  toggleTaskContainer();
+}
+
+function reset() {
+  inputedTodo.value = '';
+  currentTask = {};
+  toggleTaskContainer();
+}
 
 function persistence(todos, todoId) {
   localStorage.setItem('data', JSON.stringify(todos));
@@ -112,8 +149,6 @@ function renderAll() {
   renderFavourites();
   renderDone();
 }
-
-// localStorage.clear();
 
 // Delete a to-do
 function deleteTodo(index) {
@@ -217,12 +252,15 @@ form.addEventListener('submit', (e) => {
 addToFavourites.addEventListener('click', function () {
   if (inputedTodo.value !== '') {
     let text = inputedTodo.value;
-    todos.push({
+
+    const todoObj = {
       id: todoId,
       text,
-      favorite: true,
+      favorite: false,
       done: false,
-    });
+    };
+
+    todos.push(todoObj);
     inputedTodo.value = '';
   }
   todoId++;
@@ -232,10 +270,10 @@ addToFavourites.addEventListener('click', function () {
   toggleTaskContainer();
 });
 
-window.addEventListener('DOMContentLoaded', function () {
-  persistence(todos, todoId);
-  // localStorage.clear();
-});
+// window.addEventListener('DOMContentLoaded', function () {
+//   persistence(todos, todoId);
+//   // localStorage.clear();
+// });
 
 // Event delegation for delete buttons on each page
 let delIndex;
@@ -257,7 +295,19 @@ const del = function (e) {
   }
 };
 
-tasks.addEventListener('click', del);
+const edit = function (e) {
+  if (e.target.classList.contains('edit-todo')) {
+    findIndexFunc(e);
+
+    editTodo(delIndex);
+  }
+};
+
+tasks.addEventListener('click', function (e) {
+  del(e);
+  edit(e);
+});
+
 favs.addEventListener('click', del);
 doneTasks.addEventListener('click', del);
 
