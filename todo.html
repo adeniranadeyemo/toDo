@@ -58,8 +58,9 @@
             <div class="overlay h-screen w-full"></div>
 
             <div class="input-container h-full w-full rounded-t-3xl">
-              <div class="main-input-container flex items-center pl-12">
-                <input
+              
+                <form action="" class="main-input-container flex items-center pl-12">
+                  <input
                   type="text"
                   name=""
                   placeholder="Enter to-do"
@@ -69,11 +70,13 @@
                 />
 
                 <div class="flex items-center self-end">
-                  <span
-                    class="material-icons cursor-pointer add-to-todo-container"
-                  >
-                    add
-                  </span>
+                  <button type="submit">
+                    <span
+                      class="material-icons cursor-pointer add-to-todo-container"
+                    >
+                      add
+                    </span>
+                  </button>
 
                   <div class="reveal">
                     <p class="hover-to-fav">Add to favourites</p>
@@ -83,7 +86,8 @@
                     >
                       star
                     </span>
-                  </div>
+                </form>
+                
                 </div>
               </div>
               <!-- <div class="time-container pl-12 mt-7 flex items-center">

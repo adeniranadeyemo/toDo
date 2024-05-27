@@ -1,15 +1,13 @@
 'use strict';
 
 let username = localStorage.getItem('inputValue');
-// console.log(username);
 
 const toDoWelcome = document.getElementById('todo-welcome-text');
 
 toDoWelcome.innerHTML = `Welcome ${username}`;
-// toDoWelcome.innerHTML = `Welcome Niran`;
 
 const toDoWelcomeSubText = document.getElementById('todo-welcome-subtext');
-
+const form = document.querySelector('form');
 const showTaskCon = document.querySelector('.add-todo');
 const overlay = document.querySelector('.overlay');
 const inputContainer = document.querySelector('.input-container');
@@ -47,7 +45,8 @@ showTaskCon.addEventListener('click', toggleTaskContainer);
 overlay.addEventListener('click', toggleTaskContainer);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-const todos = [];
+const todos = JSON.parse(localStorage.getItem('data')) || [];
+// localStorage.clear();
 let favArr = [];
 let doneArr = [];
 let unCompArr = [];
@@ -83,7 +82,9 @@ const generateHTML = function (todo) {
 };
 
 // Tasks functionalities start
-let todoId = 0;
+let todoId = localStorage.getItem('todoId')
+  ? parseInt(localStorage.getItem('todoId'))
+  : 0;
 const addTodo = function () {
   if (inputedTodo.value !== '') {
     let text = inputedTodo.value;
@@ -95,21 +96,36 @@ const addTodo = function () {
     });
   }
   todoId++;
-  renderTodos();
+
+  persistence(todos, todoId);
 };
+
+function persistence(todos, todoId) {
+  localStorage.setItem('data', JSON.stringify(todos));
+  localStorage.setItem('todoId', todoId.toString());
+
+  renderAll();
+}
+
+function renderAll() {
+  renderTodos();
+  renderFavourites();
+  renderDone();
+}
+
+// localStorage.clear();
 
 // Delete a to-do
 function deleteTodo(index) {
   if (index !== -1) {
     todos.splice(index, 1);
-    renderTodos();
-    renderFavourites();
-    renderDone();
   }
 
   todos.length === 0
     ? (toDoWelcomeSubText.innerHTML = `Create to-do's`)
     : `Your to-do's`;
+
+  persistence(todos, todoId);
 }
 
 // Toggle favorite
@@ -124,10 +140,10 @@ function toggleFavorite(id) {
     }
   }
 
-  renderTodos();
-  renderFavourites();
-  renderDone();
+  persistence(todos, todoId);
 }
+
+// localStorage.clear();
 
 function toggleDone(id) {
   const todo = todos.find((todo) => id === todo.id);
@@ -140,9 +156,7 @@ function toggleDone(id) {
     }
   }
 
-  renderTodos();
-  renderDone();
-  renderFavourites();
+  persistence(todos, todoId);
 }
 
 // Render to do
@@ -182,7 +196,7 @@ const renderDone = function () {
 };
 
 // Implementing the addTodo function
-presentTodo.addEventListener('click', function () {
+function addToTodoContainer() {
   if (inputedTodo.value !== '') {
     addTodo();
 
@@ -191,6 +205,12 @@ presentTodo.addEventListener('click', function () {
     inputedTodo.value = '';
   }
   toggleTaskContainer();
+}
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  addToTodoContainer();
 });
 
 // Straight to favourite
@@ -206,9 +226,15 @@ addToFavourites.addEventListener('click', function () {
     inputedTodo.value = '';
   }
   todoId++;
-  renderTodos();
-  renderFavourites();
+
+  persistence(todos, todoId);
+
   toggleTaskContainer();
+});
+
+window.addEventListener('DOMContentLoaded', function () {
+  persistence(todos, todoId);
+  // localStorage.clear();
 });
 
 // Event delegation for delete buttons on each page
