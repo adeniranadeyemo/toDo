@@ -71,16 +71,16 @@ const generateHTML = function (todo) {
                 <div class="reveal">
                   <p class="hover-to-fav" data-id="${todo.id}">${hoverToFavText}</p>
 
-                  <span class="material-icons cursor-pointer fav-icon mr-10 w-0.5 ${isFavouriteClass}"   data-id="${todo.id}" onclick="toggleFavorite(${todo.id})">
+                  <span class="material-icons cursor-pointer fav-icon ml-4 ${isFavouriteClass}"   data-id="${todo.id}" onclick="toggleFavorite(${todo.id})">
                   star
                   </span>
                 </div>
 
-                <span class="material-icons cursor-pointer edit-todo mr-8 w-0.5">
+                <span class="material-icons cursor-pointer edit-todo ml-4" >
                       edit
                   </span>
 
-                  <span class="material-icons cursor-pointer delete-todo mr-4 w-0.5">
+                  <span class="material-icons cursor-pointer delete-todo ml-4">
                       delete
                   </span>
               </div>
