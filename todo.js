@@ -65,9 +65,9 @@ const generateHTML = function (todo) {
           <div class="inner-tasks-container flex     items-center mt-6 justify-between mb-2">
               <input type="checkbox" class="basis-.5/5 ${isDoneClass}" onclick="toggleDone(${todo.id})"/>
               
-              <p class="basis-3/5 ml-2 ${isDoneStrike}" id="${todo.id}">${todo.text}</p>
+              <p class="basis-1/2 ml-2 ${isDoneStrike}" id="${todo.id}">${todo.text}</p>
               
-              <div class="basis-1.5/5 flex items-center">
+              <div class="basis-1/5 flex items-center">
                 <div class="reveal">
                   <p class="hover-to-fav" data-id="${todo.id}">${hoverToFavText}</p>
 
