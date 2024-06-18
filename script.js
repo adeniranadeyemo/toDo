@@ -1,4 +1,11 @@
 const form = document.getElementById('form1');
+// const html = document.documentElement;
+// const mode = document.getElementById('mode');
+
+// const toggleDarkMode = () => {
+//   html.classList.toggle('dark');
+// };
+// mode.addEventListener('click', toggleDarkMode);
 
 const submitBtn1 = document.getElementById('submitBtn');
 

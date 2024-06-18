@@ -15,5 +15,20 @@ module.exports = {
       },
     },
   },
+
+  // darkMode: 'class',
+  // theme: {
+  //   extend: {
+  //     colors: {
+  //       dark: '#333333',
+  //     },
+  //   },
+  // },
+  // variants: {
+  //   extend: {
+  //     backgroundColor: ['dark'],
+  //     borderColor: ['dark'],
+  //   },
+  // },
   plugins: [require('@tailwindcss/forms')],
 };
