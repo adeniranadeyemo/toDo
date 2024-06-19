@@ -68,7 +68,7 @@ const generateHTML = function (todo) {
               <input type="checkbox" class="${isDoneClass}" onclick="toggleDone(${todo.id})"/>
             </div>
               
-            <div class="ml-4 self-start -mt-1">
+            <div class="ml-4 self-start">
               <p class="${isDoneStrike} to-do" id="${todo.id}">${todo.text}</p>
               <div class="basis-1/5 flex items-center">
                 <div class="reveal mt-7">
