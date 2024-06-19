@@ -41,6 +41,10 @@ section {
   display: block;
 }
 
+.fs-input {
+  width: 13rem;
+}
+
 .fs-input::placeholder {
   color: #909090;
 }
