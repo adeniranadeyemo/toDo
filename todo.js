@@ -62,29 +62,34 @@ const generateHTML = function (todo) {
     : 'Add to favourites';
 
   html = `
-          <div class="inner-tasks-container flex     items-center mt-6 justify-between mb-2">
-              <input type="checkbox" class="basis-.5/5 ${isDoneClass}" onclick="toggleDone(${todo.id})"/>
+          <hr>
+          <div class="inner-tasks-container flex my-5 px-10">
+            <div class="check-text flex self-start items-center">
+              <input type="checkbox" class="${isDoneClass}" onclick="toggleDone(${todo.id})"/>
+            </div>
               
-              <p class="basis-1/2 ml-2 ${isDoneStrike}" id="${todo.id}">${todo.text}</p>
-              
+            <div class="ml-4 self-start -mt-1">
+              <p class="${isDoneStrike} to-do" id="${todo.id}">${todo.text}</p>
               <div class="basis-1/5 flex items-center">
-                <div class="reveal">
+                <div class="reveal mt-7">
                   <p class="hover-to-fav" data-id="${todo.id}">${hoverToFavText}</p>
 
-                  <span class="material-icons cursor-pointer fav-icon ml-4 ${isFavouriteClass}"   data-id="${todo.id}" onclick="toggleFavorite(${todo.id})">
+                  <span class="material-icons cursor-pointer fav-icon ${isFavouriteClass}"   data-id="${todo.id}" onclick="toggleFavorite(${todo.id})">
                   star
                   </span>
                 </div>
 
-                <span class="material-icons cursor-pointer edit-todo ml-4" >
+                  <span class="material-icons cursor-pointer edit-todo ml-4 mt-7" >
                       edit
                   </span>
 
-                  <span class="material-icons cursor-pointer delete-todo ml-4">
+                  <span class="material-icons cursor-pointer delete-todo ml-4 mt-7">
                       delete
                   </span>
               </div>
-          </div>`;
+            </div>
+          </div>
+          `;
 };
 
 // Persistence from local storage
@@ -281,7 +286,8 @@ function editTodo(index) {
 let taskIndex;
 
 const findIndexFunc = function (e) {
-  const paragraphElem = e.target.parentNode.parentNode.querySelector('p');
+  const paragraphElem =
+    e.target.parentNode.parentNode.parentNode.querySelector('.to-do');
 
   const parentText = paragraphElem.textContent;
 
