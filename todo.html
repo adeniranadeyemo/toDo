@@ -50,17 +50,19 @@
       <div class="w-full bg-gray-500 separator mt-4" style="height: 1px"></div>
     </section>
 
-    <main class="h-full main-content">
-      <div class="w-3/4 mx-auto my-auto mt-44 mb-44">
+    <main class="main-content px-12 py-40">
+      <div class="w-3/4">
         <div class="all-tasks">
           <!-- Add task modal pop up -->
           <div class="task-input-container">
             <div class="overlay h-screen w-full"></div>
 
             <div class="input-container h-full w-full rounded-t-3xl">
-             
-                <form action="" class="main-input-container flex items-center pl-12">
-                  <input
+              <form
+                action=""
+                class="main-input-container flex items-center justify-center"
+              >
+                <input
                   type="text"
                   name=""
                   placeholder="Enter to-do"
@@ -69,8 +71,8 @@
                   required
                 />
 
-                <div class="flex items-center self-end">
-                  <button type="submit">
+                <div class="flex items-center justify-center self-end">
+                  <button type="submit" class="flex items-center">
                     <span
                       class="material-icons cursor-pointer add-to-todo-container"
                     >
@@ -82,28 +84,27 @@
                     <p class="hover-to-fav">Add to favourites</p>
 
                     <span
-                      class="material-icons cursor-pointer fav-icon ml-8 add-to-favourites"
+                      class="material-icons cursor-pointer fav-icon ml-5 add-to-favourites"
                     >
                       star
                     </span>
-                </form>
-                
+                  </div>
                 </div>
-              </div>
-              <!-- <div class="time-container pl-12 mt-7 flex items-center">
+              </form>
+            </div>
+          </div>
+          <!-- <div class="time-container pl-12 mt-7 flex items-center">
                 <p class="">Set time</p>
                 <span class="material-icons ml-3"> schedule </span>
               </div> -->
-            </div>
-          </div>
-          <!-- Add task modal pop up ends -->
         </div>
-
-        <article class="tasks active mt-14" data-page="tasks"></article>
-        <article class="favourites mt-14" data-page="favourites"></article>
-        <article class="done mt-14" data-page="done"></article>
-        <!-- <article class="uncompleted mt-14" data-page="uncompleted"></article> -->
       </div>
+      <!-- Add task modal pop up ends -->
+
+      <article class="tasks active mt-14" data-page="tasks"></article>
+      <article class="favourites mt-14" data-page="favourites"></article>
+      <article class="done mt-14" data-page="done"></article>
+      <!-- <article class="uncompleted mt-14" data-page="uncompleted"></article> -->
     </main>
 
     <div

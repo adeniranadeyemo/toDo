@@ -103,7 +103,6 @@ let todoId = localStorage.getItem('todoId')
 const addOrUpdateTodo = function () {
   if (inputedTodo.value !== '') {
     const todoIndex = todos.findIndex((todo) => todo.id === currentTask.id);
-    console.log(todoIndex);
 
     const todoObj = {
       id: todoId,
@@ -115,7 +114,6 @@ const addOrUpdateTodo = function () {
     if (todoIndex === -1) {
       todos.push(todoObj);
       todoId++;
-      console.log(todoObj.id);
     } else {
       todos[todoIndex] = currentTask;
       currentTask.text = inputedTodo.value;
