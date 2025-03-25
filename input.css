@@ -24,6 +24,12 @@ section {
   z-index: 450;
 }
 
+.to-do {
+  font-size: 1.3rem;
+  line-height: 1.1;
+  margin-top: 0;
+}
+
 .welcome-text h1 {
   line-height: 2rem;
 }
@@ -39,6 +45,10 @@ section {
   padding: 0.3em 1em;
   font-size: 1.2rem;
   display: block;
+}
+
+.fs-input {
+  width: 13rem;
 }
 
 .fs-input::placeholder {
@@ -225,11 +235,6 @@ button.active-li {
   text-decoration: line-through;
   color: #909090;
   /* transition: all 2s ease-in-out; */
-}
-
-.all-tasks {
-  max-height: 70vh;
-  overflow-y: auto;
 }
 
 ::-webkit-scrollbar {
